@@ -23,12 +23,27 @@
 
 canvas { cursor: move; }
 
+.controlstatusdiv {
+    display: none;
+}
+
+.viewer {
+    float: left;
+    margin-right: 10px;
+}
+
+#code {
+display: none;
+}
+
+.update {
+    display: none;
+}
+
+
 .parametersdiv {
-  border: 1px solid rgb(200,200,200);
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
   padding: 10px;
+  height: 400px;
 }
 
 .parametersdiv .header {

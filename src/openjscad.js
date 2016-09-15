@@ -25,9 +25,9 @@ OpenJsCad.log = function(txt) {
 OpenJsCad.Viewer = function(containerElm, size, options) {
     // config stuff
     // fg and bg colors
-    var defaultBgColor = [0.93, 0.93, 0.93];
+    var defaultBgColor = [0.95, 0.95, 0.95];
     var defaultMeshColor = [0, 0, 1];
-    var drawAxes = true;
+    var drawAxes = false;
     var axLength = 1000;
     this.perspective = 45; // in degrees
     this.drawOptions = {
@@ -646,8 +646,8 @@ OpenJsCad.Processor = function(containerdiv, options, onchange) {
   this.options.verbose = !!this.cleanOption(options.verbose, true);
 
   // default applies unless sizes specified in options
-  this.widthDefault = "800px";
-  this.heightDefault = "600px";
+  this.widthDefault = "400px";
+  this.heightDefault = "400px";
 
   this.viewerdiv = null;
   this.viewer = null;
@@ -734,7 +734,10 @@ OpenJsCad.Processor.prototype = {
     this.statusdiv = document.createElement("div");
     this.statusdiv.className = "statusdiv";
     // surface/line draw
+    this.controlstatusdiv = document.createElement("div");
+    this.controlstatusdiv.className = "controlstatusdiv";
     this.controldiv = document.createElement("div");
+    this.controldiv.className = "controldiv";
     var this_ = this;
     [['faces', 'surfaces', this.options.drawFaces],
      ['lines', 'lines', this.options.drawLines]].forEach(function(tup) {
@@ -750,6 +753,7 @@ OpenJsCad.Processor.prototype = {
     }, this);
     this.statusspan = document.createElement("span");
     this.statusbuttons = document.createElement("div");
+    this.statusbuttons.className = "statusbuttons";
     this.statusbuttons.style.float = "right";
     this.statusdiv.appendChild(this.statusspan);
     this.statusdiv.appendChild(this.statusbuttons);
@@ -783,10 +787,6 @@ OpenJsCad.Processor.prototype = {
     this.statusbuttons.appendChild(this.downloadOutputFileLink);
     this.parametersdiv = document.createElement("div");
     this.parametersdiv.className = "parametersdiv";
-    var headerdiv = document.createElement("div");
-    headerdiv.textContent = "Parameters:";
-    headerdiv.className = "header";
-    this.parametersdiv.appendChild(headerdiv);
     this.parameterstable = document.createElement("table");
     this.parameterstable.className = "parameterstable";
     this.parametersdiv.appendChild(this.parameterstable);
@@ -797,8 +797,10 @@ OpenJsCad.Processor.prototype = {
     };
     this.parametersdiv.appendChild(parseParametersButton);
     this.enableItems();
-    this.containerdiv.appendChild(this.statusdiv);
-    this.containerdiv.appendChild(this.errordiv);
+    this.controlstatusdiv.appendChild(this.statusdiv);
+    this.controlstatusdiv.appendChild(this.errordiv);
+    this.containerdiv.appendChild(this.controlstatusdiv);
+
     this.containerdiv.appendChild(this.parametersdiv);
     this.clearViewer();
   },
